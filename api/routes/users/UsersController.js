@@ -26,6 +26,11 @@ router.post('/follow/:id', function (req, res, next) {
   const { userId } = req;
   const otherUserId = req.params.id;
 
+  if (userId === otherUserId) {
+    res.json({"status": 400, "error": {message: 'Cannot follow yourself!'}, "data": null});
+    return;
+  }
+
   res.locals.db.query(FOLLOW_USER_QUERY, [userId, otherUserId])
   .then(data => res.json({"status": 200, "error": null, "data": null}))
   .catch(error => res.json({"status": 500, "error": error, "data": null}));

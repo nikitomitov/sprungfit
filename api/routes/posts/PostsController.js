@@ -11,14 +11,23 @@ const USER_FEED_QUERY = 'SELECT p.id, p.text, p.timestamp, u.username '+
 'WHERE uf.followed_id is not null '+
 'ORDER by p.timestamp DESC;';
 const GET_USER_POSTS = 'SELECT id,text,timestamp FROM posts WHERE user_id=? ORDER BY timestamp DESC;'
+const MAX_POST_SIZE = 50;
 
 router.post('/', function (req, res, next) {
   const { userId } = req;
   const { text, timestamp } = req.body;
 
+  if ((text.length === 0) || (text.length > MAX_POST_SIZE)) {
+    res.json({"status": 400, "error": {message: "Bad text provided!"}, "data": null});
+    return;
+  }
+
   res.locals.db.query(INSERT_POST_QUERY, [text, timestamp, userId])
-  .then(results => res.json({"status": 200, "error": null, 
-    "data": { id : results.insertId }
+  .then(results => res.json(
+    {
+      "status": 200, 
+      "error": null, 
+      "data": { id : results.insertId}
   }))
   .catch(error => res.json({"status": 500, "error": error, "data": null}));
 });
