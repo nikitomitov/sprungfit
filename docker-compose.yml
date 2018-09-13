@@ -1,0 +1,19 @@
+version: '2.1'
+services:
+    db:
+        build: ./database
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            
+        healthcheck:
+            test: "exit 0"
+    
+    api:
+        build: ./api
+        depends_on:
+            db:
+                condition: service_healthy
+        entrypoint:
+            - /usr/local/bin/docker-entrypoint.sh
+        ports:
+            - "3000:3000"
