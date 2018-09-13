@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var moment = require('moment');
 
 const GET_USERS_WITH_FOLLOWING_FLAG = 
 'SELECT u.id, u.username, if(uf.followed_id IS NULL ,false, true) as isFollowing '+
@@ -8,7 +9,7 @@ const GET_USERS_WITH_FOLLOWING_FLAG =
 '(uf.followed_id = u.id AND uf.follower_id = ?) WHERE u.id <> ?;';
 
 const FOLLOW_USER_QUERY = 'INSERT INTO user_follows_user VALUES (?,?);';
-const GET_USER_POSTS = 'SELECT id,text,timestamp FROM posts WHERE user_id=?;'
+
 
 router.get('/', function(req, res, next) {
   const { userId } = req;
@@ -20,13 +21,6 @@ router.get('/', function(req, res, next) {
   .catch(error => res.json({"status": 500, "error": error, "data": null}));
 });
 
-router.get('/:id/posts', function (req, res, next) {
-  const { userId } = req;
-
-  res.locals.db.query(GET_USER_POSTS, [userId])
-  .then(posts => res.json({"status": 200, "error": null, "data": posts}))
-  .catch(error => res.json({"status": 500, "error": error, "data": null}));
-});
 
 router.post('/follow/:id', function (req, res, next) {
   const { userId } = req;

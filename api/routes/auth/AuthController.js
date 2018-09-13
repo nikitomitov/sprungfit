@@ -21,7 +21,11 @@ router.post('/register', function(req, res) {
 
     bcrypt.hash(req.body.password, saltRounds) 
     .then(hash => db.query(INSERT_USER_QUERY,[username, hash]))
-    .catch(err => res.status(500).json(err))
+    .catch(err => {
+        res.status(500).json(err);
+        console.log(err);
+        return Promise.reject();
+    })
     .then(results => {
         const token = generateToken({ id: results.insertId });
         res.status(200).send({ auth: true, token: token });
@@ -34,7 +38,11 @@ router.post('/login', function(req, res) {
   let user = null;
 
   res.locals.db.query(FIND_USER_QUERY, [req.body.username])
-  .catch(err => res.status(500).json(err))
+  .catch(err => {
+      res.status(500).json(err);
+      console.log(err);
+      return Promise.reject();
+  })
   .then(results => {
     user = results[0];
     if (!user) { 
@@ -44,13 +52,18 @@ router.post('/login', function(req, res) {
 
     return bcrypt.compare(req.body.password, user.password);
   })
+  .catch(err => {
+      res.status(500).json(err);
+      console.log(err);
+      return Promise.reject();
+  })
   .then(isPasswordValid => {
     if (!isPasswordValid) 
         return res.status(401).send({ auth: false, token: null });
 
     const token = generateToken({ id: user.id });
     res.status(200).send({ auth: true, token: token });
-  });
+  })
 });
 
 module.exports = router;
