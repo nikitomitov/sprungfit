@@ -1,4 +1,4 @@
-import { SET_POSTS } from "../actions/actionTypes";
+import { SET_POSTS, POST_ADDED } from "../actions/actionTypes";
 
 const initialState = {
     ownPosts: [],
@@ -18,6 +18,12 @@ const reducer = (state = initialState, action) => {
           ...state,
           feedPosts: action.posts
         }; 
+
+    case POST_ADDED: 
+        return {
+          ...state,
+          ownPosts: [action.newPost, ...state.ownPosts]
+        }
 
     default:
       return state;

@@ -11,15 +11,31 @@ import {
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
-import { getPosts } from '../../Common/actions/posts';
+import Prompt from 'react-native-prompt-crossplatform';
+import { getPosts, addPost } from '../../Common/actions/posts';
 import DefaultContainer from '../../Common/components/DefaultContainer/DefaultContainer';
 import PostsList from '../../Common/components/PostList/PostsList';
+import ButtonWithBackground from "../../Common/components/ButtonWithBackground/ButtonWithBackground";
 
 
 class OwnPostsScreen extends Component {
 
+    state = {
+        promptVisible: false,
+        newPost: ''
+    }
+
     componentDidMount() {
         this.props.getPosts();
+    }
+
+    showAddPost = () => {
+        this.setState({ promptVisible: true });
+    }
+
+    addPost = text => {
+        this.props.onAddPost(this.state.newPost);
+        this.setState({ promptVisible: false, newPost: '' });
     }
 
     render() {
@@ -27,6 +43,19 @@ class OwnPostsScreen extends Component {
           <ActivityIndicator /> :
         (
             <DefaultContainer style={styles.container}>
+                <ButtonWithBackground 
+                     title="Add post" 
+                     onPress={this.showAddPost}/>
+
+                <Prompt title='Add New Post'
+                    isVisible={this.state.promptVisible}
+                    inputPlaceholder="Enter post content..."
+                    onChangeText={(text) => {
+                        this.setState({ newPost: text });
+                    }}
+                    onCancel={() => this.setState({promptVisible: false, newPost: ''})}
+                    onSubmit={ text => this.addPost(text) }/> 
+
                 <PostsList posts={this.props.posts} />
             </DefaultContainer>
         )
@@ -44,6 +73,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => {
     return {
         getPosts: () => dispatch(getPosts('own')),
+        onAddPost: newPost => dispatch(addPost(newPost))
     };
 }
 

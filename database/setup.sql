@@ -1,7 +1,4 @@
 CREATE DATABASE  IF NOT EXISTS `twitterDB` /*!40100 DEFAULT CHARACTER SET utf8 */;
-GRANT ALL PRIVILEGES on twitterDB.*
-TO 'admin'@'%' IDENTIFIED BY 'q1w2e3'
-WITH GRANT OPTION;
 
 USE `twitterDB`;
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)

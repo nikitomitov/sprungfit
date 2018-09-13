@@ -5,7 +5,6 @@ import {
   Text,
 } from "react-native";
 import ButtonWithBackground from "../../Common/components/ButtonWithBackground/ButtonWithBackground";
-import TextWithIcon from "../../Common/components/TextWithIcon/TextWithIcon";
 
 class UserListItem extends React.Component {
 

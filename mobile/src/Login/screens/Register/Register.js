@@ -42,14 +42,12 @@ class RegisterScreen extends Component {
         <DefaultInput
           placeholder="Username"
           inputStyle={styles.input}
-          icon="user"
           value={this.state.username} 
           onChangeText={val => this.updateData("username", val)}/>
 
         <DefaultInput
           placeholder="Password"
           inputStyle={styles.input}
-          icon="lock"
           value={this.state.password}
           onChangeText={val => this.updateData("password", val)}
           secureTextEntry />
