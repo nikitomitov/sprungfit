@@ -53,6 +53,7 @@ class OwnPostsScreen extends Component {
                     onChangeText={(text) => {
                         this.setState({ newPost: text });
                     }}
+                    onBackButtonPress={() => this.setState({promptVisible: false, newPost: ''})}
                     onCancel={() => this.setState({promptVisible: false, newPost: ''})}
                     onSubmit={ text => this.addPost(text) }/> 
 
