@@ -10,11 +10,26 @@ import TextWithIcon from "../../Common/components/TextWithIcon/TextWithIcon";
 class UserListItem extends React.Component {
 
   render() {
+
+    let button = null;
+
+    if (this.props.isFollowing) {
+      button = <ButtonWithBackground 
+                            title='Followed' 
+                            style={[styles.buttonStyle, styles.followingStyle]}
+                            disabled/>
+    } else {
+      button = <ButtonWithBackground 
+                            title='Follow' 
+                            style={[styles.buttonStyle, styles.followStyle]}
+                            onPress={this.props.onFollowUser} />;
+    }
+
     return (
       <View style={styles.mainContainer}>
           <View style={styles.userDescription}>
             <Text style={styles.userTitle}>{this.props.username}</Text>
-            <Button
+            {button}
           </View>
       </View>
     );
@@ -30,7 +45,7 @@ const styles = StyleSheet.create({
   },
   userDescription: {
     padding: 10,
-    width: "60%"
+    width: "100%"
   },
   userTitle: {
     fontSize: 17,
@@ -38,6 +53,15 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 15
   },
+  buttonStyle: {
+    width: '100%'
+  },
+  followingStyle : {
+    backgroundColor: 'grey',
+  },
+  followStyle: {
+    backgroundColor: 'lightgreen',
+  }
 });
 
 export default UserListItem;

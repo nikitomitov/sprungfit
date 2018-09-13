@@ -8,7 +8,10 @@ const usersList = props => {
 
     return <FlatList 
             data={props.users.map(user => { return {...user, key: ''+user.id} }) }
-            renderItem={ ({item}) => <UserListItem {...item} /> } /> 
+            renderItem={ ({item}) => 
+             <UserListItem {...item} 
+             onFollowUser={() => props.onFollowUser(item.id)} /> 
+            } /> 
 };
 
 export default usersList;

@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
-import { getUsers } from '../actions/index';
+import { getUsers, followUser } from '../actions/index';
 import DefaultContainer from '../../Common/components/DefaultContainer/DefaultContainer';
-import UsersList from '../components/UsersLists';
+import UsersList from '../components/UsersList';
 
 
 class UsersScreen extends Component {
@@ -22,12 +22,17 @@ class UsersScreen extends Component {
         this.props.getUsers();
     }
 
+    onFollowUser = userId => {
+        this.props.followUser(userId);
+    }
+
     render() {
         return this.props.isLoading ? 
           <ActivityIndicator /> :
         (
             <DefaultContainer style={styles.container}>
-                <UsersList users={this.props.users} />
+                <UsersList  users={this.props.users} 
+                            onFollowUser={this.onFollowUser} />
             </DefaultContainer>
         )
     }
@@ -44,6 +49,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => {
     return {
         getUsers: () => dispatch(getUsers()),
+        followUser: userId => dispatch(followUser(userId))
     };
 }
 

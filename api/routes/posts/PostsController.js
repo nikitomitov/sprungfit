@@ -6,7 +6,7 @@ const INSERT_POST_QUERY = 'INSERT INTO posts VALUES (null, ?, ?, ?)';
 const USER_FEED_QUERY = 'SELECT p.id, p.text, p.timestamp, u.username '+
 'FROM posts p '+
 'LEFT OUTER JOIN user_follows_user uf ON '+
-'(uf.followed_id = p.user_id AND uf.follower_id = 1) '+
+'(uf.followed_id = p.user_id AND uf.follower_id = ?) '+
 'LEFT OUTER JOIN users u ON (p.user_id = u.id) '+
 'WHERE uf.followed_id is not null '+
 'ORDER by p.timestamp DESC;';
