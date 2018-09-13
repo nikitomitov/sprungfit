@@ -7,21 +7,14 @@ import {
 import ButtonWithBackground from "../../Common/components/ButtonWithBackground/ButtonWithBackground";
 import TextWithIcon from "../../Common/components/TextWithIcon/TextWithIcon";
 
-class PostListItem extends React.Component {
+class UserListItem extends React.Component {
 
   render() {
     return (
       <View style={styles.mainContainer}>
-          <View style={styles.postDescription}>
-            <Text style={styles.postTitle}>{this.props.username}</Text>
-            <TextWithIcon 
-              icon="md-text" 
-              iconSize={20} 
-              text={this.props.text} />
-            <TextWithIcon
-              icon="md-time"
-              iconSize={20}
-              text={this.props.timestamp}/>
+          <View style={styles.userDescription}>
+            <Text style={styles.userTitle}>{this.props.username}</Text>
+            <Button
           </View>
       </View>
     );
@@ -35,11 +28,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20
   },
-  postDescription: {
+  userDescription: {
     padding: 10,
     width: "60%"
   },
-  postTitle: {
+  userTitle: {
     fontSize: 17,
     fontWeight: "bold",
     width: "100%",
@@ -47,4 +40,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostListItem;
+export default UserListItem;

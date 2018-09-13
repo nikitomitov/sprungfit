@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
-import PostListItem from './PostListItem';
+import UserListItem from './UserListItem';
 
-const postsList = props => {
-    if (!props.posts) 
+const usersList = props => {
+    if (!props.users) 
         return <ActivityIndicator/>;
 
     return <FlatList 
-            data={props.posts.map(post => { return {...post, key: ''+post.id} }) }
-            renderItem={ ({item}) => <PostListItem {...item} /> } /> 
+            data={props.users.map(user => { return {...user, key: ''+user.id} }) }
+            renderItem={ ({item}) => <UserListItem {...item} /> } /> 
 };
 
-export default postsList;
+export default usersList;
