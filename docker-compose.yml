@@ -3,7 +3,10 @@ services:
     db:
         build: ./database
         environment:
-            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            MYSQL_ROOT_PASSWORD: 1234  
+            MYSQL_DATABASE: twitterDB  
+            MYSQL_USER: api_user  
+            MYSQL_PASSWORD: 1234
             
         healthcheck:
             test: "exit 0"
